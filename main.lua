@@ -1,14 +1,7 @@
------------------------------------------------------------------------------------------
---
--- main.lua
---
------------------------------------------------------------------------------------------
 
--- hide the status bar
 display.setStatusBar( display.HiddenStatusBar )
+display.setDefault("background", 1, 1, 1)
 
--- include the Corona "composer" module
 local composer = require "composer"
 
--- load title screen
-composer.gotoScene( "page0", "fade" )
+composer.gotoScene( "pages.page0", "fade" )
