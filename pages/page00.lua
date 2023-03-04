@@ -23,7 +23,7 @@ function scene:create(event)
   buttonText:setFillColor(1, 1, 1)
   
   buttonBg:addEventListener("tap", function(event)
-    composer.gotoScene("pages.page1", { effect = "flip", time = 100, direction="left" })
+    composer.gotoScene("pages.page01", { effect = "flip", time = 100, direction="left" })
   end)
 end
 
