@@ -1,6 +1,6 @@
 
 display.setStatusBar( display.HiddenStatusBar )
-display.setDefault("background", 1, 1, 1)
+display.setDefault("background", 0.96, 0.95, 0.9)
 
 local composer = require "composer"
 
