@@ -1,6 +1,8 @@
 local composer = require("composer")
 local scene = composer.newScene()
 local images= {}
+local blockButton = 0
+local buttonNext
 
 function scene:create(event)
   local sceneGroup = self.view
@@ -78,8 +80,14 @@ function scene:create(event)
          event.y > rect1.y - rect1.height / 2 and
          event.y < rect1.y + rect1.height / 2 then
         rect1:setFillColor(0.84, 0.72, 0.51)
+        blockButton = blockButton + 1
+        if blockButton == 2 then
+          buttonNext:setFillColor(0.84, 0.72, 0.51) 
+        end
       else
+        blockButton = blockButton - 1
         rect1:setFillColor(0, 0, 0, 0)
+        buttonNext:setFillColor(1, 1, 1)
       end
     end
     return true
@@ -129,8 +137,14 @@ function scene:create(event)
          event.y > rect2.y - rect2.height / 2 and
          event.y < rect2.y + rect2.height / 2 then
         rect2:setFillColor(0.84, 0.72, 0.51)
+        blockButton = blockButton + 1
+        if blockButton == 2 then
+        buttonNext:setFillColor(0.84, 0.72, 0.51) 
+        end
       else
+        blockButton = blockButton - 1
         rect2:setFillColor(0, 0, 0, 0)
+        buttonNext:setFillColor(1, 1, 1)
       end
     end
     return true
@@ -138,14 +152,17 @@ function scene:create(event)
 
   obj2:addEventListener("touch", onObj2Touch)
 
-  local buttonNext = display.newCircle(sceneGroup,  display.contentWidth - 90, display.contentHeight + 125, 70)
-  buttonNext:setFillColor(0.84, 0.72, 0.51)
+  buttonNext = display.newCircle(sceneGroup,  display.contentWidth - 90, display.contentHeight + 125, 70)
+  buttonNext:setFillColor(1, 1, 1)
   local image1 = display.newImageRect(sceneGroup, "imgs/next.png", 40, 40)
   image1.x, image1.y = buttonNext.x, buttonNext.y
   buttonNext:addEventListener("tap", function(event)
-    textoObj = nil
-    composer.gotoScene("pages.page03", { effect = "flip", time = 100, direction="left" })
+    if blockButton == 2 then     
+      textoObj = nil
+      composer.gotoScene("pages.page03", { effect = "flip", time = 100, direction="left" })
+    end
   end)
+
 
   local buttonBack = display.newCircle(sceneGroup, 90,  display.contentHeight + 125, 70)
   buttonBack:setFillColor(0.27, 0.23, 0.19)
