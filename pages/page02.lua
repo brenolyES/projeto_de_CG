@@ -144,7 +144,7 @@ function scene:create(event)
       else
         blockButton = blockButton - 1
         rect2:setFillColor(0, 0, 0, 0)
-        buttonNext:setFillColor(1, 1, 1)
+        buttonNext:setFillColor(0.5, 0.5, 0.5)
       end
     end
     return true
@@ -153,7 +153,7 @@ function scene:create(event)
   obj2:addEventListener("touch", onObj2Touch)
 
   buttonNext = display.newCircle(sceneGroup,  display.contentWidth - 90, display.contentHeight + 125, 70)
-  buttonNext:setFillColor(1, 1, 1)
+  buttonNext:setFillColor(0.5, 0.5, 0.5)
   local image1 = display.newImageRect(sceneGroup, "imgs/next.png", 40, 40)
   image1.x, image1.y = buttonNext.x, buttonNext.y
   buttonNext:addEventListener("tap", function(event)
