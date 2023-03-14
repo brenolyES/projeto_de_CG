@@ -108,6 +108,7 @@ function scene:create(event)
   image1.x, image1.y = buttonNext.x, buttonNext.y
   buttonNext:addEventListener("tap", function(event)
     textoObj = nil
+    composer.removeScene("pages.page05")
     composer.gotoScene("pages.page06", { effect = "flip", time = 100, direction="left" })
   end)
   -- Botão no canto inferior direito
@@ -119,6 +120,7 @@ function scene:create(event)
   image2.x, image2.y = buttonBack.x, buttonBack.y
   image2.xScale = -1
   buttonBack:addEventListener("tap", function(event)
+    composer.removeScene("pages.page05")
     composer.gotoScene("pages.page04", { effect = "flip", time = 100, direction="left" })
   end)
   -- Botão no canto inferior esquerdo

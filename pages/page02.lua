@@ -159,6 +159,7 @@ function scene:create(event)
   buttonNext:addEventListener("tap", function(event)
     if blockButton == 2 then     
       textoObj = nil
+      composer.removeScene("pages.page02")
       composer.gotoScene("pages.page03", { effect = "flip", time = 100, direction="left" })
     end
   end)
@@ -170,6 +171,7 @@ function scene:create(event)
   image2.x, image2.y = buttonBack.x, buttonBack.y
   image2.xScale = -1
   buttonBack:addEventListener("tap", function(event)
+    composer.removeScene("pages.page02")
     composer.gotoScene("pages.page01", { effect = "flip", time = 100, direction="left" })
   end)
   

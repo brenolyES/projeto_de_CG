@@ -47,6 +47,7 @@ sceneGroup:insert(textoObj)
   image1.x, image1.y = buttonNext.x, buttonNext.y
   buttonNext:addEventListener("tap", function(event)
     textoObj = nil
+    composer.removeScene("pages.page03")
     composer.gotoScene("pages.page04", { effect = "flip", time = 100, direction="left" })
   end)
 
@@ -56,6 +57,7 @@ sceneGroup:insert(textoObj)
   image2.x, image2.y = buttonBack.x, buttonBack.y
   image2.xScale = -1
   buttonBack:addEventListener("tap", function(event)
+    composer.removeScene("pages.page03")
     composer.gotoScene("pages.page02", { effect = "flip", time = 100, direction="left" })
   end)
 

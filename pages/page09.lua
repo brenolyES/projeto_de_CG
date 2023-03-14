@@ -48,6 +48,7 @@ function scene:create(event)
   buttonText:setFillColor(1, 1, 1)
   
   buttonBg:addEventListener("tap", function(event)
+    composer.removeScene("pages.page09")
     composer.gotoScene("pages.page00", { effect = "flip", time = 100, direction="left" })
   end)
 end
