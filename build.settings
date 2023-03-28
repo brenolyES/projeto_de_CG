@@ -13,6 +13,11 @@ settings =
 		supported = { "portrait", },
 	},
 
+	splashScreen = 
+    {
+        enable = false
+    },
+
 	--
 	-- Android section
 	--
