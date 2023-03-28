@@ -14,14 +14,14 @@ function scene:create(event)
   sceneGroup:insert(fundoImage)
 
   images.talkImage = display.newImage( "imgs/talk.png" )
-  images.talkImage.x = 100
-  images.talkImage.y = -180
+  images.talkImage.x = display.contentCenterX - 280
+  images.talkImage.y = display.contentCenterY - 580
   images.talkImage:scale( 1.5, 1.5 )
   sceneGroup:insert( images.talkImage )
 
   images.caixaTexto = display.newImage( "imgs/caixaTexto.png" )
   images.caixaTexto.x = display.contentCenterX
-  images.caixaTexto.y = display.contentCenterY - 580
+  images.caixaTexto.y = display.contentCenterY - 480
   images.caixaTexto:scale( 2, 0.7 )
   sceneGroup:insert( images.caixaTexto )
 
@@ -29,7 +29,7 @@ function scene:create(event)
     local options = {
         text = texto,
         x = display.contentCenterX,
-        y = display.contentCenterY - 550,
+        y = display.contentCenterY - 460,
         width = 650,
         font = native.systemFont,
         fontSize = 34,
@@ -38,16 +38,16 @@ function scene:create(event)
     local textoObj = display.newText(options)
     sceneGroup:insert(textoObj)
 
-  local rect1 = display.newRect(display.contentCenterX, display.contentCenterY + 30, 700, 300)
+  local rect1 = display.newRect(display.contentCenterX, display.contentCenterY - 10, 650, 250)
   rect1.strokeWidth = 5
   rect1:setStrokeColor(0.27, 0.23, 0.19)
   rect1:setFillColor(0, 0, 0, 0)
   sceneGroup:insert(rect1)
 
   local obj1 =  display.newImage( "imgs/obj1.png" )
-  obj1.x = display.contentCenterX - 200
-  obj1.y = display.contentCenterY - 300
-  obj1:scale( 1.3, 1.3 )
+  obj1.x = display.contentCenterX - 150
+  obj1.y = display.contentCenterY - 280
+  obj1:scale( 1, 1 )
   sceneGroup:insert(obj1)
   
   local title1 = display.newText({
@@ -55,7 +55,7 @@ function scene:create(event)
     x = rect1.x,
     y = rect1.y - rect1.height / 2 - 20,
     font = native.systemFont,
-    fontSize = 50,
+    fontSize = 40,
     align = "center",
     width = rect1.width,
   })
@@ -95,16 +95,16 @@ function scene:create(event)
 
   obj1:addEventListener("touch", onObj1Touch)
   
-  local rect2 = display.newRect(display.contentCenterX, display.contentCenterY + 400, 700, 300)
+  local rect2 = display.newRect(display.contentCenterX, display.contentCenterY + 300, 650, 250)
   rect2.strokeWidth = 5
   rect2:setStrokeColor(0.27, 0.23, 0.19)
   rect2:setFillColor(0, 0, 0, 0)
   sceneGroup:insert(rect2)
 
   local obj2 =  display.newImage( "imgs/obj2.png" )
-  obj2.x = display.contentCenterX + 200
-  obj2.y = display.contentCenterY - 300
-  obj2:scale( 2, 2 )
+  obj2.x = display.contentCenterX + 150
+  obj2.y = display.contentCenterY - 280
+  obj2:scale( 1.5, 1.5 )
   sceneGroup:insert(obj2)
   
   local title2 = display.newText({
@@ -112,7 +112,7 @@ function scene:create(event)
     x = rect2.x,
     y = rect2.y - rect2.height / 2 - 20,
     font = native.systemFont,
-    fontSize = 50,
+    fontSize = 40,
     align = "center",
     width = rect2.width,
   })
@@ -152,7 +152,7 @@ function scene:create(event)
 
   obj2:addEventListener("touch", onObj2Touch)
 
-  buttonNext = display.newCircle(sceneGroup,  display.contentWidth - 90, display.contentHeight + 125, 70)
+  buttonNext = display.newCircle(sceneGroup,  display.contentCenterX + 280,  display.contentCenterY + 530, 70)
   buttonNext:setFillColor(0.5, 0.5, 0.5)
   local image1 = display.newImageRect(sceneGroup, "imgs/next.png", 40, 40)
   image1.x, image1.y = buttonNext.x, buttonNext.y
@@ -165,7 +165,7 @@ function scene:create(event)
   end)
 
 
-  local buttonBack = display.newCircle(sceneGroup, 90,  display.contentHeight + 125, 70)
+  local buttonBack = display.newCircle(sceneGroup, display.contentCenterX - 280,  display.contentCenterY + 530, 70)
   buttonBack:setFillColor(0.27, 0.23, 0.19)
   local image2 = display.newImageRect(sceneGroup, "imgs/next.png", 40, 40)
   image2.x, image2.y = buttonBack.x, buttonBack.y

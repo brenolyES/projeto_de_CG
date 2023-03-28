@@ -15,32 +15,32 @@ function scene:create(event)
   sceneGroup:insert(fundoImage)
 
   images.talkImage = display.newImage( "imgs/talk.png" )
-  images.talkImage.x = 100
-  images.talkImage.y = -180
+  images.talkImage.x = display.contentCenterX - 280
+  images.talkImage.y = display.contentCenterY - 580
   images.talkImage:scale( 1.5, 1.5 )
   sceneGroup:insert( images.talkImage )
 
   images.caixaTexto = display.newImage( "imgs/caixaTexto.png" )
   images.caixaTexto.x = display.contentCenterX
-  images.caixaTexto.y = display.contentCenterY - 580
+  images.caixaTexto.y = display.contentCenterY - 480
   images.caixaTexto:scale( 2, 0.7 )
   sceneGroup:insert( images.caixaTexto )
 
   local obj5 =  display.newImage( "imgs/obj7.png" )
   obj5.x = display.contentCenterX 
-  obj5.y = display.contentCenterY + 400
+  obj5.y = display.contentCenterY + 300
   obj5:scale( 2, 2 )
   sceneGroup:insert(obj5)
 
   local obj3 =  display.newImage( "imgs/obj3.png" )
   obj3.x = display.contentCenterX - 200
-  obj3.y = display.contentCenterY - 300
+  obj3.y = display.contentCenterY - 200
   obj3:scale( 2, 2 )
   sceneGroup:insert(obj3)
 
   local obj4 =  display.newImage( "imgs/obj4.png" )
   obj4.x = display.contentCenterX + 200
-  obj4.y = display.contentCenterY - 300
+  obj4.y = display.contentCenterY - 200
   obj4:scale( 2, 2 )
   sceneGroup:insert(obj4)
 
@@ -92,7 +92,7 @@ function scene:create(event)
     local options = {
         text = texto,
         x = display.contentCenterX,
-        y = display.contentCenterY - 550,
+        y = display.contentCenterY - 460,
         width = 650,
         font = native.systemFont,
         fontSize = 34,
@@ -102,7 +102,7 @@ function scene:create(event)
   sceneGroup:insert(textoObj)
 
   -- Botão no canto inferior direito
-  local buttonNext = display.newCircle(sceneGroup,  display.contentWidth - 90, display.contentHeight + 125, 70)
+  local buttonNext = display.newCircle(sceneGroup,  display.contentCenterX + 280,  display.contentCenterY + 530, 70)
   buttonNext:setFillColor(0.84, 0.72, 0.51)
   local image1 = display.newImageRect(sceneGroup, "imgs/next.png", 40, 40)
   image1.x, image1.y = buttonNext.x, buttonNext.y
@@ -114,7 +114,7 @@ function scene:create(event)
   -- Botão no canto inferior direito
   
   -- Botão no canto inferior esquerdo
-  local buttonBack = display.newCircle(sceneGroup, 90,  display.contentHeight + 125, 70)
+  local buttonBack = display.newCircle(sceneGroup, display.contentCenterX - 280,  display.contentCenterY + 530, 70)
   buttonBack:setFillColor(0.27, 0.23, 0.19)
   local image2 = display.newImageRect(sceneGroup, "imgs/next.png", 40, 40)
   image2.x, image2.y = buttonBack.x, buttonBack.y

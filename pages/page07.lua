@@ -15,50 +15,50 @@ function scene:create(event)
   sceneGroup:insert(fundoImage)
 
   images.talkImage = display.newImage( "imgs/talk.png" )
-  images.talkImage.x = 100
-  images.talkImage.y = -180
+  images.talkImage.x = display.contentCenterX - 280
+  images.talkImage.y = display.contentCenterY - 580
   images.talkImage:scale( 1.5, 1.5 )
   sceneGroup:insert( images.talkImage )
 
   images.caixaTexto = display.newImage( "imgs/caixaTexto.png" )
   images.caixaTexto.x = display.contentCenterX
-  images.caixaTexto.y = display.contentCenterY - 580
+  images.caixaTexto.y = display.contentCenterY - 480
   images.caixaTexto:scale( 2, 0.7 )
   sceneGroup:insert( images.caixaTexto )
 
   local obj9 =  display.newImage( "imgs/obj9.png" )
   obj9.x = display.contentCenterX 
-  obj9.y = display.contentCenterY - 300
-  obj9:scale( 2, 2 )
+  obj9.y = display.contentCenterY - 260
+  obj9:scale( 1.5, 1.5 )
   sceneGroup:insert(obj9)
 
   local obj1 =  display.newImage( "imgs/obj1.png" )
   obj1.x = display.contentCenterX 
-  obj1.y = display.contentCenterY + 200
-  obj1:scale( 2.5, 2.5 )
+  obj1.y = display.contentCenterY + 120
+  obj1:scale( 2, 2 )
   sceneGroup:insert(obj1)
 
   local obj10 =  display.newImage( "imgs/obj10.png" )
   obj10.x = display.contentCenterX 
-  obj10.y = display.contentCenterY + 550
-  obj10:scale( 2, 2 )
+  obj10.y = display.contentCenterY + 400
+  obj10:scale( 1.5, 1.5 )
   sceneGroup:insert(obj10)
 
   local imgX1 =  display.newImage( "imgs/X.png" )
   imgX1.x = display.contentCenterX 
-  imgX1.y = display.contentCenterY - 80
+  imgX1.y = display.contentCenterY - 120
   imgX1:scale( 2, 2 )
   sceneGroup:insert(imgX1)
 
   local imgX2 =  display.newImage( "imgs/X.png" )
   imgX2.x = display.contentCenterX + 180
-  imgX2.y = display.contentCenterY - 100
+  imgX2.y = display.contentCenterY - 80
   imgX2:scale( 2, 2 )
   sceneGroup:insert(imgX2)
 
   local imgY =  display.newImage( "imgs/Y.png" )
   imgY.x = display.contentCenterX - 180
-  imgY.y = display.contentCenterY - 100
+  imgY.y = display.contentCenterY - 80
   imgY:scale( 2, 2 )
   sceneGroup:insert(imgY)
 
@@ -117,7 +117,7 @@ function scene:create(event)
     local options = {
         text = texto,
         x = display.contentCenterX,
-        y = display.contentCenterY - 550,
+        y = display.contentCenterY - 460,
         width = 650,
         font = native.systemFont,
         fontSize = 34,
@@ -127,7 +127,7 @@ function scene:create(event)
   sceneGroup:insert(textoObj)
 
   -- Botão no canto inferior direito
-  local buttonNext = display.newCircle(sceneGroup,  display.contentWidth - 90, display.contentHeight + 125, 70)
+  local buttonNext = display.newCircle(sceneGroup,  display.contentCenterX + 280,  display.contentCenterY + 530, 70)
   buttonNext:setFillColor(0.84, 0.72, 0.51)
   local image1 = display.newImageRect(sceneGroup, "imgs/next.png", 40, 40)
   image1.x, image1.y = buttonNext.x, buttonNext.y
@@ -139,7 +139,7 @@ function scene:create(event)
   -- Botão no canto inferior direito
   
   -- Botão no canto inferior esquerdo
-  local buttonBack = display.newCircle(sceneGroup, 90,  display.contentHeight + 125, 70)
+  local buttonBack = display.newCircle(sceneGroup, display.contentCenterX - 280,  display.contentCenterY + 530, 70)
   buttonBack:setFillColor(0.27, 0.23, 0.19)
   local image2 = display.newImageRect(sceneGroup, "imgs/next.png", 40, 40)
   image2.x, image2.y = buttonBack.x, buttonBack.y
