@@ -1,9 +1,7 @@
 local composer = require("composer")
-local physics = require("physics")
 local scene = composer.newScene()
 local images= {}
-physics.start()
-physics.setGravity(0, 0)
+local imgX2Caiu = false
 
 function scene:create(event)
   local sceneGroup = self.view
@@ -26,94 +24,73 @@ function scene:create(event)
   images.caixaTexto:scale( 2, 0.7 )
   sceneGroup:insert( images.caixaTexto )
 
-  local obj9 =  display.newImage( "imgs/obj9.png" )
-  obj9.x = display.contentCenterX 
-  obj9.y = display.contentCenterY - 260
-  obj9:scale( 1.5, 1.5 )
-  sceneGroup:insert(obj9)
-
   local obj1 =  display.newImage( "imgs/obj1.png" )
   obj1.x = display.contentCenterX 
-  obj1.y = display.contentCenterY + 120
+  obj1.y = display.contentCenterY
   obj1:scale( 2, 2 )
   sceneGroup:insert(obj1)
 
-  local obj10 =  display.newImage( "imgs/obj10.png" )
-  obj10.x = display.contentCenterX 
-  obj10.y = display.contentCenterY + 400
-  obj10:scale( 1.5, 1.5 )
-  sceneGroup:insert(obj10)
-
   local imgX1 =  display.newImage( "imgs/X.png" )
-  imgX1.x = display.contentCenterX 
-  imgX1.y = display.contentCenterY - 120
-  imgX1:scale( 2, 2 )
+  imgX1.x = display.contentCenterX + 80
+  imgX1.y = display.contentCenterY - 200
+  imgX1:scale( 1, 1 )
   sceneGroup:insert(imgX1)
+
+  local imgY2 =  display.newImage( "imgs/Y.png" )
+  imgY2.x = display.contentCenterX - 80
+  imgY2.y = display.contentCenterY - 200
+  imgY2:scale( 1, 1 )
+  sceneGroup:insert(imgY2)
 
   local imgX2 =  display.newImage( "imgs/X.png" )
   imgX2.x = display.contentCenterX + 180
-  imgX2.y = display.contentCenterY - 80
-  imgX2:scale( 2, 2 )
+  imgX2.y = display.contentCenterY - 150
+  imgX2:scale( 1, 1 )
   sceneGroup:insert(imgX2)
 
   local imgY =  display.newImage( "imgs/Y.png" )
   imgY.x = display.contentCenterX - 180
-  imgY.y = display.contentCenterY - 80
-  imgY:scale( 2, 2 )
+  imgY.y = display.contentCenterY - 150
+  imgY:scale( 1, 1 )
   sceneGroup:insert(imgY)
 
-  local function dragObj(event)
-    local obj = event.target
-    if event.phase == "began" then
-      display.getCurrentStage():setFocus(obj)
-      obj.isFocus = true
-      obj.x0 = event.x - obj.x
-      obj.y0 = event.y - obj.y
-    elseif obj.isFocus then
-      if event.phase == "moved" then
-        obj.x = event.x - obj.x0
-        obj.y = event.y - obj.y0
-      elseif event.phase == "ended" or event.phase == "cancelled" then
-        display.getCurrentStage():setFocus(nil)
-        obj.isFocus = false
-      end
+  local function verificarImagensForaDaTela()
+    if (imgX2 == nil and imgY == nil) then
+      display.remove(imgX1)
+      imgX1 = nil
+      display.remove(imgY2)
+      imgY2 = nil
+      display.remove(obj1)
+      obj1 = nil
+      local bebe =  display.newImage( "imgs/obj11.png" )
+      bebe.x = display.contentCenterX 
+      bebe.y = display.contentCenterY
+      bebe:scale( 2, 2 )
+      sceneGroup:insert(bebe)
     end
-    return true
   end
 
-  imgX1:addEventListener("touch", dragObj)
-  imgX2:addEventListener("touch", dragObj)
-  imgY:addEventListener("touch", dragObj)
-  physics.addBody(imgX1, "dynamic", {isSensor = true})
-  physics.addBody(imgX2, "dynamic", {isSensor = true})
-  physics.addBody(imgY, "dynamic", {isSensor = true})
-  physics.addBody(obj10, "static")
-
-  local function onCollision(event)
-    if event.phase == "began" then
-      local objA = event.object1
-      local objB = event.object2
-      if (objA == imgX1 and objB == obj10) or (objA == obj10 and objB == imgX1) or
-         (objA == imgX2 and objB == obj10) or (objA == obj10 and objB == imgX2) or
-         (objA == imgY and objB == obj10) or (objA == obj10 and objB == imgY) then
-        display.remove(obj9, obj10)
-        display.remove(obj10)
-        display.remove(obj1)
-        display.remove(imgX1)
+  local function onAccelerate(event)
+    local acceleration = event
+    if (acceleration.isShake and imgX2) then
+      transition.to(imgX2, {y = display.actualContentHeight + imgX2.height, time = 500, onComplete = function()
         display.remove(imgX2)
+        imgX2 = nil
+        imgX2Caiu = true
+      end})
+    elseif (acceleration.isShake and imgX2 == nil and imgY) then
+      transition.to(imgY, {y = display.actualContentHeight + imgY.height, time = 500, onComplete = function()
         display.remove(imgY)
-        local obj11 = display.newImage("imgs/obj11.png")
-        obj11.x = display.contentCenterX
-        obj11.y = display.contentCenterY
-        obj11:scale(2, 2)
-        sceneGroup:insert(obj11)
-      end
+        imgY = nil
+        verificarImagensForaDaTela()
+      end})
     end
-  end
+  end  
 
-  Runtime:addEventListener("collision", onCollision)
+  system.setAccelerometerInterval(50)
+  Runtime:addEventListener("accelerometer", onAccelerate)
 
-  local texto = "Elimine a possibilidade desse recém nascido possuir o síndrome de Klinefelter ou o síndrome de Jacob. ."
+  local texto = "Elimine a possibilidade desse recém nascido possuir o síndrome de Klinefelter ou o síndrome de Jacob."
     local options = {
         text = texto,
         x = display.contentCenterX,
@@ -125,6 +102,20 @@ function scene:create(event)
     }
   local textoObj = display.newText(options)
   sceneGroup:insert(textoObj)
+
+  local texto2 = "Dica: Agite o celular ate eliminar as possibilidades do bebe ter a sindome de Klinefelter/jacob."
+  local options2 = {
+      text = texto2,
+      x = display.contentCenterX,
+      y = display.contentCenterY + 300,
+      width = 650,
+      font = native.systemFont,
+      fontSize = 25,
+      align = "center"
+  }
+local textoObj2 = display.newText(options2)
+textoObj2:setFillColor( 0.27, 0.23, 0.19 )
+sceneGroup:insert(textoObj2)
 
   -- Botão no canto inferior direito
   local buttonNext = display.newCircle(sceneGroup,  display.contentCenterX + 280,  display.contentCenterY + 530, 70)

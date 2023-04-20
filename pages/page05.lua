@@ -26,69 +26,88 @@ function scene:create(event)
   images.caixaTexto:scale( 2, 0.7 )
   sceneGroup:insert( images.caixaTexto )
 
-  local obj5 =  display.newImage( "imgs/obj7.png" )
-  obj5.x = display.contentCenterX 
-  obj5.y = display.contentCenterY + 300
-  obj5:scale( 2, 2 )
-  sceneGroup:insert(obj5)
+  local ovulo =  display.newImage( "imgs/obj7.png" )
+  ovulo.x = display.contentCenterX 
+  ovulo.y = display.contentCenterY + 450
+  ovulo:scale( 1, 1 )
+  sceneGroup:insert(ovulo)
+  
+  local cromossomo =  display.newImage( "imgs/obj3.png" )
+  cromossomo.x = display.contentCenterX - 200
+  cromossomo.y = display.contentCenterY - 250
+  cromossomo:scale( 1, 1 )
+  sceneGroup:insert(cromossomo)
 
-  local obj3 =  display.newImage( "imgs/obj3.png" )
-  obj3.x = display.contentCenterX - 200
-  obj3.y = display.contentCenterY - 200
-  obj3:scale( 2, 2 )
-  sceneGroup:insert(obj3)
+  local texto2 = "Dica: O objetivo é fazer com que o cromossomo chegue até o ovulo. Então, mexa o celular de um lado para o outro e agite para ajudar o cromossomo a chegar no objetivo."
+    local options2 = {
+        text = texto2,
+        x = display.contentCenterX,
+        y = display.contentCenterY + 300,
+        width = 650,
+        font = native.systemFont,
+        fontSize = 25,
+        align = "center"
+    }
+  local textoObj2 = display.newText(options2)
+  textoObj2:setFillColor( 0.27, 0.23, 0.19 )
+  sceneGroup:insert(textoObj2)
 
-  local obj4 =  display.newImage( "imgs/obj4.png" )
-  obj4.x = display.contentCenterX + 200
-  obj4.y = display.contentCenterY - 200
-  obj4:scale( 2, 2 )
-  sceneGroup:insert(obj4)
+  physics.addBody(cromossomo, "dynamic", {isSensor = true})
+  physics.addBody(ovulo, "static", {radius=50})
 
-  local function dragObj(event)
-    local obj = event.target
-    if event.phase == "began" then
-      display.getCurrentStage():setFocus(obj)
-      obj.isFocus = true
-      obj.x0 = event.x - obj.x
-      obj.y0 = event.y - obj.y
-    elseif obj.isFocus then
-      if event.phase == "moved" then
-        obj.x = event.x - obj.x0
-        obj.y = event.y - obj.y0
-      elseif event.phase == "ended" or event.phase == "cancelled" then
-        display.getCurrentStage():setFocus(nil)
-        obj.isFocus = false
-      end
+  local function checkCenter()
+    if cromossomo and cromossomo.x > display.contentCenterX - 50 and cromossomo.x < display.contentCenterX + 50 and cromossomo.y > display.contentCenterY - 50 and cromossomo.y < display.contentCenterY + 50 then
+        textoObj2.text = "Dica: Agora agite o celular para o cromossomo a chegar ao óvulo!"
     end
-    return true
   end
-
-  obj3:addEventListener("touch", dragObj)
-  obj4:addEventListener("touch", dragObj)
-  physics.addBody(obj3, "dynamic", {isSensor = true})
-  physics.addBody(obj4, "dynamic", {isSensor = true})
-  physics.addBody(obj5, "static", {radius=50})
 
   local function onCollision(event)
     if event.phase == "began" then
       local objA = event.object1
       local objB = event.object2
-      if (objA == obj3 and objB == obj5) or (objA == obj5 and objB == obj3) then
-        display.remove(obj5)
-        display.remove(obj3)
-        local obj6 = display.newImage("imgs/obj8.png")
-        obj6.x = obj5.x
-        obj6.y = obj5.y - 100
-        obj6:scale(2, 2)
-        sceneGroup:insert(obj6)
+      if (objA == cromossomo and objB == ovulo) or (objA == ovulo and objB == cromossomo) then
+        display.remove(textoObj2)
+        local bebe = display.newImage("imgs/obj8.png")
+        bebe.x = display.contentCenterX
+        bebe.y = display.contentCenterY
+        bebe:scale(2, 2)
+        sceneGroup:insert(bebe)
       end
     end
   end
 
+  local function onAccelerate(event)
+    local acceleration = event
+    if (acceleration.isShake and cromossomo.x >= display.contentWidth * 0.5 and cromossomo.y >= display.contentHeight * 0.5) then
+      transition.to(cromossomo, {time=1000, y=display.contentHeight * 0.8})
+    end
+  end  
+
+  local function onOrientationChange(event)
+    local currentOrientation = event.type
+    if currentOrientation == "landscapeLeft" then
+      cromossomo:rotate(-90)
+      transition.to(cromossomo, {time=1000, x=display.contentWidth * 0.8})
+    else
+      cromossomo.rotation = 0
+      if cromossomo.x >= display.contentWidth * 0.8 and cromossomo.y >= display.contentHeight * 0.3 then
+        transition.to(cromossomo, {time=1000, y=display.contentCenterY})
+      end
+      if currentOrientation == "landscapeRight" and cromossomo.x ~= display.contentCenterX - 200 then
+        cromossomo:rotate(90)
+        transition.to(cromossomo, {time=1000, x=display.contentCenterX})
+      end
+    end
+  end
+  
+  system.setAccelerometerInterval(50)
+  Runtime:addEventListener("orientation", onOrientationChange)
+  Runtime:addEventListener("accelerometer", onAccelerate)
   Runtime:addEventListener("collision", onCollision)
+  Runtime:addEventListener("enterFrame", checkCenter)
 
 
-  local texto = "Determine o cromossomos capaz de gerar uma pessoa do sexo MASCULINO."
+  local texto = "Faca com que o cromossomo x chegue ate o ovulo assim gerando um bebe do sexo FEMININO."
     local options = {
         text = texto,
         x = display.contentCenterX,
