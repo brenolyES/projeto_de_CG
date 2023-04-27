@@ -4,9 +4,24 @@ local scene = composer.newScene()
 local images= {}
 physics.start()
 physics.setGravity(0, 0)
+local pageSound, applauseSound
+local pageSoundOptions = {
+  channel = 1,
+  loops = 0,
+  duration = 1000,
+  fadein = 0
+}
+local applauseSound = {
+  channel = 1,
+  loops = 0,
+  duration = 1000,
+  fadein = 0
+}
 
 function scene:create(event)
   local sceneGroup = self.view
+  pageSound = audio.loadSound("./sounds/page.mp3")
+  applauseSound = audio.loadSound("./sounds/applause.mp3")
   local verificarCoresRetangulos
 
   local fundoImage = display.newImageRect(sceneGroup, "imgs/fundo.png", display.actualContentWidth, display.actualContentHeight)
@@ -67,6 +82,7 @@ function scene:create(event)
       local objB = event.object2
       if (objA == cromossomo and objB == ovulo) or (objA == ovulo and objB == cromossomo) then
         display.remove(textoObj2)
+        audio.play(applauseSound, applauseSoundOptions)
         local bebe = display.newImage("imgs/obj6.png")
         bebe.x = display.contentCenterX
         bebe.y = display.contentCenterY
@@ -126,6 +142,7 @@ function scene:create(event)
   local image1 = display.newImageRect(sceneGroup, "imgs/next.png", 40, 40)
   image1.x, image1.y = buttonNext.x, buttonNext.y
   buttonNext:addEventListener("tap", function(event)
+    audio.play(pageSound, pageSoundOptions)
     textoObj = nil
     composer.removeScene("pages.page04")
     composer.gotoScene("pages.page05", { effect = "flip", time = 100, direction="left" })
@@ -139,6 +156,7 @@ function scene:create(event)
   image2.x, image2.y = buttonBack.x, buttonBack.y
   image2.xScale = -1
   buttonBack:addEventListener("tap", function(event)
+    audio.play(pageSound, pageSoundOptions)
     composer.removeScene("pages.page04")
     composer.gotoScene("pages.page03", { effect = "flip", time = 100, direction="left" })
   end)

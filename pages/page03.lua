@@ -1,9 +1,17 @@
 local composer = require("composer")
 local scene = composer.newScene()
 local images= {}
+local pageSound
+local pageSoundOptions = {
+  channel = 1,
+  loops = 0,
+  duration = 1000,
+  fadein = 0
+}
 
 function scene:create(event)
   local sceneGroup = self.view
+  pageSound = audio.loadSound("./sounds/page.mp3")
 
   local fundoImage = display.newImageRect(sceneGroup, "imgs/fundo.png", display.actualContentWidth, display.actualContentHeight)
   fundoImage.x = display.contentCenterX
@@ -46,6 +54,7 @@ sceneGroup:insert(textoObj)
   local image1 = display.newImageRect(sceneGroup, "imgs/next.png", 40, 40)
   image1.x, image1.y = buttonNext.x, buttonNext.y
   buttonNext:addEventListener("tap", function(event)
+    audio.play(pageSound, pageSoundOptions)
     textoObj = nil
     composer.removeScene("pages.page03")
     composer.gotoScene("pages.page04", { effect = "flip", time = 100, direction="left" })
@@ -57,6 +66,7 @@ sceneGroup:insert(textoObj)
   image2.x, image2.y = buttonBack.x, buttonBack.y
   image2.xScale = -1
   buttonBack:addEventListener("tap", function(event)
+    audio.play(pageSound, pageSoundOptions)
     composer.removeScene("pages.page03")
     composer.gotoScene("pages.page02", { effect = "flip", time = 100, direction="left" })
   end)

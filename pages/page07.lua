@@ -2,9 +2,24 @@ local composer = require("composer")
 local scene = composer.newScene()
 local images= {}
 local imgX2Caiu = false
+local pageSound, applauseSound
+local pageSoundOptions = {
+  channel = 1,
+  loops = 0,
+  duration = 1000,
+  fadein = 0
+}
+local applauseSound = {
+  channel = 1,
+  loops = 0,
+  duration = 1000,
+  fadein = 0
+}
 
 function scene:create(event)
   local sceneGroup = self.view
+  pageSound = audio.loadSound("./sounds/page.mp3")
+  applauseSound = audio.loadSound("./sounds/applause.mp3")
   local verificarCoresRetangulos
 
   local fundoImage = display.newImageRect(sceneGroup, "imgs/fundo.png", display.actualContentWidth, display.actualContentHeight)
@@ -56,6 +71,7 @@ function scene:create(event)
 
   local function verificarImagensForaDaTela()
     if (imgX2 == nil and imgY == nil) then
+      audio.play(applauseSound, applauseSoundOptions)
       display.remove(imgX1)
       imgX1 = nil
       display.remove(imgY2)
@@ -123,6 +139,7 @@ sceneGroup:insert(textoObj2)
   local image1 = display.newImageRect(sceneGroup, "imgs/next.png", 40, 40)
   image1.x, image1.y = buttonNext.x, buttonNext.y
   buttonNext:addEventListener("tap", function(event)
+    audio.play(pageSound, pageSoundOptions)
     textoObj = nil
     composer.removeScene("pages.page07")
     composer.gotoScene("pages.page08", { effect = "flip", time = 100, direction="left" })
@@ -136,6 +153,7 @@ sceneGroup:insert(textoObj2)
   image2.x, image2.y = buttonBack.x, buttonBack.y
   image2.xScale = -1
   buttonBack:addEventListener("tap", function(event)
+    audio.play(pageSound, pageSoundOptions)
     composer.removeScene("pages.page07")
     composer.gotoScene("pages.page06", { effect = "flip", time = 100, direction="left" })
   end)

@@ -1,9 +1,17 @@
 local composer = require("composer")
 local scene = composer.newScene()
 local images= {}
+local pageSound
+local pageSoundOptions = {
+  channel = 1,
+  loops = 0,
+  duration = 1000,
+  fadein = 0
+}
 
 function scene:create(event)
   local sceneGroup = self.view
+  pageSound = audio.loadSound("./sounds/page.mp3")
 
   local fundoImage = display.newImageRect(sceneGroup, "imgs/fundo.png", display.actualContentWidth, display.actualContentHeight)
   fundoImage.x = display.contentCenterX
@@ -47,23 +55,12 @@ function scene:create(event)
   local image1 = display.newImageRect(sceneGroup, "imgs/next.png", 40, 40)
   image1.x, image1.y = buttonNext.x, buttonNext.y
   buttonNext:addEventListener("tap", function(event)
+    audio.play(pageSound, pageSoundOptions)
     textoObj = nil
     composer.removeScene("pages.page01")
     composer.gotoScene("pages.page02", { effect = "flip", time = 100, direction="left" })
   end)
   -- Botão no canto inferior direito
-  
-  -- Botão no canto inferior esquerdo
-  local buttonBack = display.newCircle(sceneGroup, display.contentCenterX - 280,  display.contentCenterY + 530, 70)
-  buttonBack:setFillColor(0.27, 0.23, 0.19)
-  local image2 = display.newImageRect(sceneGroup, "imgs/next.png", 40, 40)
-  image2.x, image2.y = buttonBack.x, buttonBack.y
-  image2.xScale = -1
-  buttonBack:addEventListener("tap", function(event)
-    composer.removeScene("pages.page01")
-    composer.gotoScene("pages.page00", { effect = "flip", time = 100, direction="left" })
-  end)
-  -- Botão no canto inferior esquerdo
 
 end
 

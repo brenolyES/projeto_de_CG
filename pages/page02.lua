@@ -3,9 +3,24 @@ local scene = composer.newScene()
 local images= {}
 local blockButton = 0
 local buttonNext
+local pageSound, applauseSound
+local pageSoundOptions = {
+  channel = 1,
+  loops = 0,
+  duration = 1000,
+  fadein = 0
+}
+local applauseSound = {
+  channel = 1,
+  loops = 0,
+  duration = 1000,
+  fadein = 0
+}
 
 function scene:create(event)
   local sceneGroup = self.view
+  pageSound = audio.loadSound("./sounds/page.mp3")
+  applauseSound = audio.loadSound("./sounds/applause.mp3")
   local verificarCoresRetangulos
 
   local fundoImage = display.newImageRect(sceneGroup, "imgs/fundo.png", display.actualContentWidth, display.actualContentHeight)
@@ -139,6 +154,7 @@ function scene:create(event)
         rect2:setFillColor(0.84, 0.72, 0.51)
         blockButton = blockButton + 1
         if blockButton == 2 then
+        audio.play(applauseSound, applauseSoundOptions)
         buttonNext:setFillColor(0.84, 0.72, 0.51) 
         end
       else
@@ -159,6 +175,7 @@ function scene:create(event)
   buttonNext:addEventListener("tap", function(event)
     if blockButton == 2 then     
       textoObj = nil
+      audio.play(pageSound, pageSoundOptions)
       composer.removeScene("pages.page02")
       composer.gotoScene("pages.page03", { effect = "flip", time = 100, direction="left" })
     end
@@ -171,6 +188,7 @@ function scene:create(event)
   image2.x, image2.y = buttonBack.x, buttonBack.y
   image2.xScale = -1
   buttonBack:addEventListener("tap", function(event)
+    audio.play(pageSound, pageSoundOptions)
     composer.removeScene("pages.page02")
     composer.gotoScene("pages.page01", { effect = "flip", time = 100, direction="left" })
   end)
